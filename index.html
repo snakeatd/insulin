@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Insulin by pikesley</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Insulin</h1>
+        <h2>Let's do something useful with my diabetes data</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/pikesley/insulin/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/pikesley/insulin/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/pikesley/insulin" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>What's this?</h1>
+
+<p>Well I was recently diagnosed with Type-1 Diabetes. I've been collecting lots of data related to my condiiton using <a href="https://play.google.com/store/apps/details?id=com.gexperts.ontrack">OnTrack</a>, and wanted to do more interesting things with it. Hence this.</p>
+
+<p>For now all it does is ingest a CSV file, parse it into some nice JSON, and stuff it into MongoDB.</p>
+
+<h1>Install</h1>
+
+<pre><code>gem install insulin
+</code></pre>
+
+<p>Also requires MongoDB. Instructions for installing Mongo on Ubuntu are <a href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-debian-or-ubuntu-linux/">here</a>.</p>
+
+<h1>Usage</h1>
+
+<pre><code>insulin ingest &lt;/path/to/on_track_export_file.csv&gt;
+</code></pre>
+
+<p>This will take that file, parse it, and push the JSON into a number of collections in a MongoDB database called 'insulin'. You can view them with something like</p>
+
+<pre><code>$ mongo insulin
+MongoDB shell version: 2.0.6
+connecting to: insulin
+&gt; db.events.find({serial : 266})
+{ "_id" : ObjectId("4ff07b371508cc259c8a8f0c"), "serial" : 266, "timestamp" : ISODate("2012-06-28T09:21:05Z"), "tzoffset" : "+0100", "timezone" : "BST", "unixtime" : 1340875265, "day" : "thursday", "date" : "2012-06-28", "time" : "10:21:05 BST", "type" : "medication", "subtype" : "humalog", "tag" : "breakfast", "value" : 4, "notes" : { "food" : [ "2 bacon", "2 toast" ], "note" : [ "test note" ] } }
+&gt; 
+</code></pre>
+
+<p>There's also some Postfix voodoo I've been using to extract the CSVs from incoming mail, which I'll document here soon.</p>
+
+<h1>Next steps</h1>
+
+<ul>
+<li>Get it generating custom CSVs for Spreadsheeting</li>
+<li>Get it doing some analysis</li>
+<li>Give it a <a href="http://meteor.com/">meteor</a> front-end (might require some help from <a href="https://github.com/mrchrisadams">Chris</a>). Graphs, yo</li>
+<li>Possibly connect to <a href="http://platform.fatsecret.com/api/">this API</a> to extract carb values from plain-text food descriptions (this may be a little ambitious, we'll see)</li>
+</ul>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-20895204-9");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
